@@ -1,0 +1,69 @@
+
+{% block images_dispo %}
+    <div class="wrapper" style="align-content: start">
+        {% for x in images %}
+        <div id="item">
+            {% block image_dyspo %}
+            <div class="card" style="width: 100px" >
+                <div style="position:relative;" onmouseover="play_animation_text()"  id="{{x}}" onmouseout="stop_animation_text()" onclick="afficherImage(this.id)">
+                    <img src="https://img.icons8.com/fluency/96/null/waste--v1.png" width="96px" height="96px"/>
+                </div>
+                <div style="white-space: nowrap; overflow: hidden;" >
+                    <div id="texte_defilant" style="animation: defilement-rtl 5s infinite linear; animation-play-state: paused;">{{x.id}}</div>
+                </div>
+            </div>
+            {% endblock %}
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+
+<style>
+    @keyframes defilement-rtl {
+    0% {
+        transform: translate3d(0,0,0);      /* position initiale à droite */
+    }
+    100% {
+        transform: translate3d(-100%,0,0);  /* position finale à gauche */
+    }
+    }
+
+  
+    .wrapper {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 10px;
+    
+    }
+
+.wrapper > div {
+  text-align: center;
+  
+}
+
+    
+</style>
+<script>
+    function play_animation_text(){
+        document.getElementById("texte_defilant").style.animationPlayState = 'running';
+        document.getElementById("texte_defilant").style.animationIterationCount = 'infinite';
+    }
+    function stop_animation_text(){
+        document.getElementById("texte_defilant").style.animationIterationCount = '0';
+        transform: translate3d(0,0,0); 
+    }
+    function afficherImage(e){
+  
+        var str = e.split(' ')
+        var resultat = str[3].slice(1,-2)
+        var id = str[1].slice(1,-2)
+        console.log(id)
+        document.getElementById("type_dechets").textContent = "Résultat : "+resultat;
+        document.getElementById("affiche_grande_image").src = id;
+    }
+
+
+
+</script>
